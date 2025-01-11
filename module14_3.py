@@ -13,7 +13,7 @@ class UserState(StatesGroup):
     growth = State()
     weight = State()
 
-API_TOKEN = '7789653976:AAHvzizuR1Tgnbp62o5UcBL2wF66mggpMCc'
+API_TOKEN = ''
 bot = Bot(token=API_TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
