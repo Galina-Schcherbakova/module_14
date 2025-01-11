@@ -7,32 +7,26 @@ from aiogram.utils import executor
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 import crud_functions
 
-# Настройка логирования
 logging.basicConfig(level=logging.INFO)
 
-# Определение состояний
 class UserState(StatesGroup):
     age = State()
     growth = State()
     weight = State()
 
-# Инициализация бота
-API_TOKEN = '7789653976:AAHvzizuR1Tgnbp62o5UcBL2wF66mggpMCc'  # Замените на ваш токен
+API_TOKEN = ''
 bot = Bot(token=API_TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
-# Создаем подключение к базе данных и таблице Products
 crud_functions.initiate_db()
 
-# Основное меню
 keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 button_calculate = KeyboardButton('Рассчитать')
 button_info = KeyboardButton('Информация')
-button_buy = KeyboardButton('Купить')  # Новая кнопка "Купить"
+button_buy = KeyboardButton('Купить')
 keyboard.add(button_calculate, button_info, button_buy)
 
-# Inline-клавиатура для покупки
 inline_keyboard_buy = InlineKeyboardMarkup(row_width=1)
 button_product1 = InlineKeyboardButton('Product1', callback_data='product_buying')
 button_product2 = InlineKeyboardButton('Product2', callback_data='product_buying')
@@ -40,7 +34,6 @@ button_product3 = InlineKeyboardButton('Product3', callback_data='product_buying
 button_product4 = InlineKeyboardButton('Product4', callback_data='product_buying')
 inline_keyboard_buy.add(button_product1, button_product2, button_product3, button_product4)
 
-# Inline-клавиатура
 inline_keyboard = InlineKeyboardMarkup(row_width=2)
 button_calories = InlineKeyboardButton('Рассчитать норму калорий', callback_data='calories')
 button_formulas = InlineKeyboardButton('Формулы расчёта', callback_data='formulas')
