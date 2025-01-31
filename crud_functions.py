@@ -13,15 +13,30 @@ def initiate_db():
     )
     ''')
 
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS Users (
+        id INTEGER PRIMARY KEY,
+        username TEXT NOT NULL UNIQUE,
+        email TEXT NOT NULL UNIQUE,
+        age INTEGER NOT NULL,
+        balance INTEGER NOT NULL
+    )
+    ''')
+
     conn.commit()
     conn.close()
 
-def get_all_products():
+def add_user(username, email, age):
     conn = sqlite3.connect('products.db')
     cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM Products")
-    products = cursor.fetchall()
-
+    cursor.execute("INSERT INTO Users (username, email, age, balance) VALUES (?, ?, ?, 1000)", (username, email, age))
+    conn.commit()
     conn.close()
-    return products
+
+def is_included(username):
+    conn = sqlite3.connect('products.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT EXISTS(SELECT 1 FROM Users WHERE username=?)", (username,))
+    exists = cursor.fetchone()[0]
+    conn.close()
+    return exists
